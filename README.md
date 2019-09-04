@@ -20,20 +20,24 @@ CUDA_VISIBLE_DEVICES=0 python submission.py --datapath {dataset}  --outdir {outp
 ## Check output
 * {output}
     * {pair_1}
+        * img_reference.png
+        * img_target.png
         * disp.npy
         * uncertainty.npy
         * disp.jpg
         * disp.cbar.jpg
-        * min_max_disp.txt
+        * disp_min_max.txt
         * disp.mask.jpg
         * uncertainty.jpg
         * time.txt
     * {pair 2}
+        * img_reference.png
+        * img_target.png
         * disp.npy
         * uncertainty.npy
         * disp.jpg
         * disp.cbar.jpg
-        * min_max_disp.txt
+        * disp_min_max.txt
         * disp.mask.jpg
         * uncertainty.jpg
         * time.txt

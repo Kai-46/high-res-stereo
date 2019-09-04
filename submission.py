@@ -13,6 +13,8 @@ import time
 from models.submodule import *
 from utils.eval import mkdir_p, save_pfm
 from utils.preprocess import get_transform
+import shutil
+
 #cudnn.benchmark = True
 cudnn.benchmark = False
 
@@ -172,6 +174,10 @@ def main():
 
         with open('%s/%s/time.txt'%(args.outdir,idxname.split('/')[0]),'w') as f:
              f.write(str(ttime))
+
+        # copy reference image and target image to output directory
+        shutil.copy(test_left_img[inx], '%s/%s/img_reference.png'%(args.outdir, idxname.split('/')[0]))
+        shutil.copy(test_right_img[inx], '%s/%s/img_target.png'%(args.outdir, idxname.split('/')[0]))
 
         torch.cuda.empty_cache()
 
