@@ -9,7 +9,7 @@
     * {pair_1}
         * im0.png
         * im1.png
-    * {pair 2}
+    * {pair_2}
         * im0.png
         * im1.png
     * ...
@@ -28,7 +28,7 @@ CUDA_VISIBLE_DEVICES=0 python submission.py --datapath {dataset}  --outdir {outp
         * disp.mask.jpg
         * uncertainty.jpg
         * time.txt
-    * {pair 2}
+    * {pair_2}
         * disp.npy
         * uncertainty.npy
         * disp.jpg
