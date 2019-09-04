@@ -167,7 +167,7 @@ def main():
         pred_disp = (pred_disp - min_val) / (max_val - min_val)
         save_image_only(pred_disp, '%s/%s/disp.jpg'% (args.outdir, idxname.split('/')[0]), cmap='jet', save_cbar=True, save_mask=True)
 
-        with open('%s/%s/min_max_disp.txt'%(args.outdir,idxname.split('/')[0]),'w') as f:
+        with open('%s/%s/disp_min_max.txt'%(args.outdir,idxname.split('/')[0]),'w') as f:
              f.write('%f, %f'%(min_val, max_val))
 
         cv2.imwrite('%s/%s/uncertainty.jpg'% (args.outdir, idxname.split('/')[0]),np.uint8(entropy/entropy.max()*255))
