@@ -39,7 +39,10 @@ CUDA_VISIBLE_DEVICES=0 python submission.py --datapath {dataset}  --outdir {outp
         * time.txt
     * ...
 
-========================================================================================================================================
+---
+---
+---
+
 # Hierarchical Deep Stereo Matching on High Resolution Images
 Architecture:
 <img src="./architecture.png" width="800">
