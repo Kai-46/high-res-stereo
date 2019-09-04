@@ -139,20 +139,40 @@ def main():
 
         # clip while keep inf
         invalid = np.logical_or(pred_disp == np.inf,pred_disp!=pred_disp)
-        pred_disp[invalid] = np.inf
+        pred_disp[invalid] = np.nan
 
-        np.save('%s/%s-disp.npy'% (args.outdir, idxname.split('/')[0]),(pred_disp))
-        np.save('%s/%s-ent.npy'% (args.outdir, idxname.split('/')[0]),(entropy))
-        cv2.imwrite('%s/%s-disp.png'% (args.outdir, idxname.split('/')[0]),pred_disp/pred_disp[~invalid].max()*255)
-        cv2.imwrite('%s/%s-ent.png'% (args.outdir, idxname.split('/')[0]),entropy/entropy.max()*255)
+        from save_image_only import save_image_only
+        # tmp = pred_disp.copy()
+        # tmp[np.isinf(tmp)] = np.nan
+        # tmp = np.float32(tmp)
+        # min_val, max_val = np.percentile(tmp, [1, 99])
+        # tmp = np.clip(tmp, min_val, max_val)
+        # save_image_only(tmp / np.nanmax(np.abs(tmp)), os.path.join(args.outdir, 'disp.jpg'), cmap='jet', save_cbar=True)
 
-        with open('%s/%s.pfm'% (args.outdir, idxname),'w') as f:
-            save_pfm(f,pred_disp[::-1,:])
-        with open('%s/%s/timeHSM.txt'%(args.outdir,idxname.split('/')[0]),'w') as f:
+        # np.save('%s/%s-disp.npy'% (args.outdir, idxname.split('/')[0]),(pred_disp))
+        # np.save('%s/%s-ent.npy'% (args.outdir, idxname.split('/')[0]),(entropy))
+        # cv2.imwrite('%s/%s-disp.png'% (args.outdir, idxname.split('/')[0]),pred_disp/pred_disp[~invalid].max()*255)
+        # cv2.imwrite('%s/%s-ent.png'% (args.outdir, idxname.split('/')[0]),entropy/entropy.max()*255)
+
+        # with open('%s/%s.pfm'% (args.outdir, idxname),'w') as f:
+        #     save_pfm(f,pred_disp[::-1,:])
+        
+        np.save('%s/%s/disp.npy'% (args.outdir, idxname.split('/')[0]), (pred_disp))
+
+        min_val, max_val = np.nanpercentile(pred_disp, [0.5, 99.5])
+        pred_disp = np.clip(pred_disp, min_val, max_val)
+        pred_disp = (pred_disp - min_val) / (max_val - min_val)
+        save_image_only(pred_disp, '%s/%s/disp.jpg'% (args.outdir, idxname.split('/')[0]), cmap='jet', save_cbar=True, save_mask=True)
+
+        with open('%s/%s/min_max_disp.txt'%(args.outdir,idxname.split('/')[0]),'w') as f:
+             f.write('%f, %f'%(min_val, max_val))
+
+        with open('%s/%s/time.txt'%(args.outdir,idxname.split('/')[0]),'w') as f:
              f.write(str(ttime))
-            
+        
+        cv2.imwrite('%s/%s/uncertainty.jpg'% (args.outdir, idxname.split('/')[0]),np.uint8(entropy/entropy.max()*255))
+
         torch.cuda.empty_cache()
 
 if __name__ == '__main__':
     main()
-

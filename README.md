@@ -1,3 +1,24 @@
+# For those who would like a quick start with inference
+## Requirements
+- tested with python 2.7.15 and 3.6.8
+- tested with pytorch 0.4.0, 0.4.1 and 1.0.0
+- a few packages need to be installed, for eamxple, texttable, scikit-image
+
+## Prepare your data
+* {dataset}
+    * {pair_1}
+        * im0.png
+        * im1.png
+    * {pair 2}
+        * im0.png
+        * im1.png
+    * ...
+
+## Execute command
+CUDA_VISIBLE_DEVICES=0 python submission.py --datapath {dataset}  --outdir {output} --loadmodel ./final-768px.pth --testres 1 --clean 0.8 --max_disp 512
+
+
+========================================================================================================================================
 # Hierarchical Deep Stereo Matching on High Resolution Images
 Architecture:
 <img src="./architecture.png" width="800">
@@ -39,12 +60,12 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python train.py --maxdisp 384 --batchsize 24 --data
 ## Inference
 Example:
 ```
-CUDA_VISIBLE_DEVICES=3 python submission.py --datapath ./data-mbtest/   --outdir ./mboutput --loadmodel ./weights/final-768px.tar  --testres 1 --clean 0.8 --max_disp -1
+CUDA_VISIBLE_DEVICES=3 python submission.py --datapath ./data-mbtest/   --outdir ./mboutput --loadmodel ./weights/final-768px.pth  --testres 1 --clean 0.8 --max_disp -1
 ```
 
 Evaluation:
 ```
-CUDA_VISIBLE_DEVICES=3 python submission.py --datapath ./data-HRRS/   --outdir ./output --loadmodel ./weights/final-768px.tar  --testres 0.5
+CUDA_VISIBLE_DEVICES=3 python submission.py --datapath ./data-HRRS/   --outdir ./output --loadmodel ./weights/final-768px.pth  --testres 0.5
 python eval_disp.py --indir ./output --gtdir ./data-HRRS/
 ```
 
