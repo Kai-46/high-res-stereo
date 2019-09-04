@@ -17,6 +17,27 @@
 ## Execute command
 CUDA_VISIBLE_DEVICES=0 python submission.py --datapath {dataset}  --outdir {output} --loadmodel ./final-768px.pth --testres 1 --clean 0.8 --max_disp 512
 
+## Check output
+* {output}
+    * {pair_1}
+        * disp.npy
+        * uncertainty.npy
+        * disp.jpg
+        * disp.cbar.jpg
+        * min_max_disp.txt
+        * disp.mask.jpg
+        * uncertainty.jpg
+        * time.txt
+    * {pair 2}
+        * disp.npy
+        * uncertainty.npy
+        * disp.jpg
+        * disp.cbar.jpg
+        * min_max_disp.txt
+        * disp.mask.jpg
+        * uncertainty.jpg
+        * time.txt
+    * ...
 
 ========================================================================================================================================
 # Hierarchical Deep Stereo Matching on High Resolution Images

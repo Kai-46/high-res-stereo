@@ -158,6 +158,7 @@ def main():
         #     save_pfm(f,pred_disp[::-1,:])
         
         np.save('%s/%s/disp.npy'% (args.outdir, idxname.split('/')[0]), (pred_disp))
+        np.save('%s/%s/uncertainty.npy'% (args.outdir, idxname.split('/')[0]), (entropy))
 
         min_val, max_val = np.nanpercentile(pred_disp, [0.5, 99.5])
         pred_disp = np.clip(pred_disp, min_val, max_val)
@@ -167,10 +168,10 @@ def main():
         with open('%s/%s/min_max_disp.txt'%(args.outdir,idxname.split('/')[0]),'w') as f:
              f.write('%f, %f'%(min_val, max_val))
 
+        cv2.imwrite('%s/%s/uncertainty.jpg'% (args.outdir, idxname.split('/')[0]),np.uint8(entropy/entropy.max()*255))
+
         with open('%s/%s/time.txt'%(args.outdir,idxname.split('/')[0]),'w') as f:
              f.write(str(ttime))
-        
-        cv2.imwrite('%s/%s/uncertainty.jpg'% (args.outdir, idxname.split('/')[0]),np.uint8(entropy/entropy.max()*255))
 
         torch.cuda.empty_cache()
 
